@@ -15,7 +15,7 @@ function App() {
           target="_blank"
           rel="noopener noreferrer"
         >
-          Learn React
+          Ах, у ели, ах у ёлки, ах у ели злые волки разбросали все иголки!
         </a>
       </header>
     </div>
