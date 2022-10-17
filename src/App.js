@@ -1,23 +1,29 @@
 import React from 'react';
 import './App.css';
-import { Routes, Route } from 'react-router-dom';
-import HomePage from "./pages/HomePage";
-import ProfilePage from "./pages/ProfilePage";
-import ChatsPage from "./pages/ChatsPage";
-import NotFoundPage from "./pages/NotFoundPage";
-import Messages from "./pages/Messages";
+import ChatListPage from './pages/ChatListPage';
+import MessageListPage from './pages/MessageListPage';
+
+import {Routes, Route} from 'react-router-dom'
+import Header from './components/Header';
+import {useState} from 'react';
+import { ThemeContext,themes } from './context';
 
 function App() {
+    const [currentTheme, setCurrentTheme] = useState(themes.light);
+
+    const toggleTheme = () => {
+        setCurrentTheme(prevState => prevState === themes.light ? themes.dark : themes.light)
+    }
     return (
-        <div className="App">
-            <Routes>
-                <Route path={'/'} element={<HomePage />}/>
-                <Route path={'/profile'} element={<ProfilePage />}/>
-                <Route path={'/chats'} element={<ChatsPage />}/>
-                <Route path={'/messages/:id'} element={<Messages />}/>
-                <Route path={'*'} element={<NotFoundPage />}/>
-            </Routes>
-        </div>
+        <ThemeContext.Provider value={{theme: currentTheme, toggleTheme: toggleTheme}}>
+        <Header />
+        <main style={{background: currentTheme.background, color: currentTheme.textColor}}>
+        <Routes>
+            <Route path={'/'} element={<ChatListPage />} />
+            <Route path={'/message/:id'} element={<MessageListPage />} />
+        </Routes>
+        </main>
+        </ThemeContext.Provider>
     );
 }
 
